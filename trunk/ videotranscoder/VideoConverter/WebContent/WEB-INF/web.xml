@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>VideoConverter</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>First.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description></description>
+		<display-name>Animator</display-name>
+		<servlet-name>Animator</servlet-name>
+		<servlet-class>servlet.Animator</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Animator</servlet-name>
+		<url-pattern>/Animator.html</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>Logout</display-name>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>servlet.Logout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/Logout</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>Converter</display-name>
+		<servlet-name>Converter</servlet-name>
+		<servlet-class>servlet.Converter</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Converter</servlet-name>
+		<url-pattern>/Converter</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>BasicServlet</display-name>
+		<servlet-name>BasicServlet</servlet-name>
+		<servlet-class>servlet.BasicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BasicServlet</servlet-name>
+		<url-pattern>/BasicServlet</url-pattern>
+	</servlet-mapping>
+</web-app>
