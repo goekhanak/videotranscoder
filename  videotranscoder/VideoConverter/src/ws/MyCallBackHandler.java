@@ -40,16 +40,13 @@ public class MyCallBackHandler extends TranscoderCallbackHandler {
       
   }
   
-  
-  
-  
-  
   /**
    * auto generated Axis2 Error handler
    * override this method for handling error response from transcodeVideo operation
    */
     public void receiveErrortranscodeVideo(java.lang.Exception e) {
     	System.out.println("receiveErrortranscodeVideo  ");
+    	videoController.VideoTrancodeFailed(videoName);
     	e.printStackTrace();
     }
     

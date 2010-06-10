@@ -115,10 +115,12 @@ if(vc != null){
 				border="0" title=<%= v.getOrginalFile()%>
 				name=<%= v.getOrginalFile()%> alt=<%= v.getOrginalFile()%>>
 
-			<p><a href=<%= Video.getS3Url(v.getMobileVideo())%>  target=“_blank”>Download
+			<p><a href=<%= Video.getS3Url(v.getMobileVideo())%>  target=“_blank”>
 			Mobile Video</a></p>
-			<p><a href=<%= Video.getS3Url(v.getStreamingVideo())%> target=“_blank”>Stream
-			Video</a></p>
+			
+			<p><a href=<%= Video.getS3Url(v.getMobileVideo())%>  target=“_blank”>
+			Streaming Video</a></p>
+			
 			<%
 			
 			%>

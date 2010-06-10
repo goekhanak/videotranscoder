@@ -33,6 +33,48 @@ public class CLEngine {
 	public static final String AWS_DIRECTORY = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/webapps/VideoConverter/";
 	
 	
+	public static String shellRunnerWithOutput(String command){
+		String s = "";
+		String output  = null;
+		
+		System.out.println("Commad to run: "+ command );
+		
+		try {
+			
+	        Process p = Runtime.getRuntime().exec(command);
+	        
+	        BufferedReader stdInput = new BufferedReader(new 
+	             InputStreamReader(p.getInputStream()));
+
+	        BufferedReader stdError = new BufferedReader(new 
+	             InputStreamReader(p.getErrorStream()));
+
+	        // read the output from the command
+	        System.out.println("Here is the standard output of the command:\n");
+	        while ((s = stdInput.readLine()) != null) {
+	        	output =  s;
+	            System.out.println(s);
+	            
+	        }
+	        
+	        // read any errors from the attempted command
+	        System.out.println("Here is the standard error of the command (if any):\n");
+	        while ((s = stdError.readLine()) != null) {
+	            System.out.println(s);
+	        }
+	       
+		    }
+	        catch (IOException e) {
+	            System.out.println("exception happened - here's what I know: ");
+	            e.printStackTrace();
+	            System.exit(-1);
+	            return null;
+	        }
+	        
+	        return output;
+	} 
+	
+	
 	/**
 	 * Shell runner.
 	 *
@@ -78,15 +120,6 @@ public class CLEngine {
 	}
 	
 	
-	/**
-	 * Sets the number of instances.
-	 *
-	 * @param i the new number of instances
-	 */
-	public void setNumberOfInstances(int i){
-		
-		
-	}
 	
 	/**
 	 * Generate key frames.
@@ -95,12 +128,14 @@ public class CLEngine {
 	 */
 	public void generateKeyFrames(String inputFile){
 		
+		inputFile = Video.ABSOLUTE_PATH+inputFile;
 		
-		inputFile = "media/"+inputFile;
+		
+		int videoDuration = getDurationOfFile(inputFile);
 		
 	    String genFrameCommand = ""; 
 	    int offset = 0 ;
-	    int videoDuration = 100;
+	    
 	    Random randomGenerator = new Random();
 		
 		for (int i = 0; i < CLEngine.NUMBER_OF_KEY_FRAMES; i++) {
@@ -118,6 +153,32 @@ public class CLEngine {
 	}
 	
 	
+	private int getDurationOfFile(String inputFile) {
+		
+		String durationString = null;
+		
+		//String cmd = "ffmpeg -i "+inputFile+"  2>&1 | grep \"Duration\" | cut -d ' ' -f 4 | sed s/,//";
+		String cmd = "/bin/sh /home/ubuntu/tomcat/apache-tomcat-6.0.26/scripts/getDuration.sh "+inputFile;
+		
+		
+		durationString  = shellRunnerWithOutput(cmd);
+		
+		System.out.println("This is duration");
+		
+		if(durationString != null){
+			//int seconds  = Integer.parseInt(durationString.substring(durationString.lastIndexOf(':')+1,durationString.lastIndexOf(':')+3));
+			int hours = Integer.parseInt(durationString.substring(0,2));
+			int minutes  = Integer.parseInt(durationString.substring(3,5));
+			int seconds = Integer.parseInt(durationString.substring(6,8));
+			
+			return (hours*60*60)+(minutes*60)+seconds;
+		}
+		
+		
+		return 100;
+	}
+
+
 	/**
 	 * Creates the animated gif.
 	 *
@@ -125,7 +186,7 @@ public class CLEngine {
 	 */
 	public void createAnimatedGif(String inputFile){
 		
-		inputFile = "media/"+inputFile;
+		inputFile = Video.ABSOLUTE_PATH+inputFile;
 		
 		String animatedCommand = "convert -delay " +CLEngine.DELAY_TICK +" ";
 		String outputFile = inputFile.substring(0,inputFile.lastIndexOf("."))+".gif"; 
@@ -171,7 +232,7 @@ public String convertStreamingVideo(String sourceVideo, String targetVideo){
 		String encodeCommad = "";
 		
 		//one pass 
-		otherParameters  = "-acodec libfaac -ab 128k -ac 2 -vcodec libx264 -vpre medium -crf 24 -threads 0"; 
+		otherParameters  = "-acodec libfaac -ab 128k -ac 2 -vcodec libx264 -vpre medium -crf 18 -threads 0"; 
 		
 		encodeCommad = "ffmpeg -y -i "+ sourceVideo +size
 			+ otherParameters+" " +targetVideo; 
@@ -203,40 +264,8 @@ public String convertStreamingVideo(String sourceVideo, String targetVideo){
 		
 		
 		//one pass 
-		otherParameters  = " -acodec libfaac -ab 128k -ac 2 -vcodec libx264 -vpre faster -crf 20 -threads 0"; 
+		otherParameters  = " -acodec libfaac -ab 128k -ac 2 -vcodec libx264 -vpre faster -crf 24 -threads 0"; 
 		
-		
-		//two pass
-		
-		/*
-		otherParameters = "-pass 1 -vcodec libx264 -vpre fast_firstpass -b 512k " +
-				"-bt 512k -threads 0 -f mp4 -an  -r 25 -y /dev/null " +
-				"&& ffmpeg -i "+sourceVideo  +" -pass 2 -acodec libfaac -ab 128k " +
-				"-ac 2 -vcodec libx264 -vpre fast -b 512k -bt 512k -threads 0 ";
-		*/
-		
-		/*
-		otherParameters = " -acodec libfaac -ar 44100 -ab 96k -coder ac " +
-				" -vcodec libx264 " +
-				" -b 1600k "  +
-				"-i_qfactor 0.71 -keyint_min 25 -b_strategy 1 -g 250 -r 20 ";
-		*/
-		
-		//otherParameters =  " -y -r 25 -f mpeg -vcodec mpeg2video -ar 48000 -b 500k -ab 128k ";
-		
-		
-		
-		//otherParameters =  " -y -r 25 -f mp4 -vcodec mpeg4 -acodec libfaac -ar 48000 -b 500k -ab 128k ";
-	
-		
-		/*
-		otherParameters = " -y  -r 25 -an -v 1 -threads auto -vcodec libx264 -b 500k -bt 175k " +
-				"-refs 1 -loop 1 -deblockalpha 0 -deblockbeta 0 -parti4x4 1 -partp8x8 1 " +
-				"-me full -subq 1 -me_range 21 -chroma 1 -slice 2 -bf 0 -level 30 -g 300 " +
-				"-keyint_min 30 -sc_threshold 40 -rc_eq \'blurCplx^(1-qComp)\'"+ 
-		        "-qcomp 0.7 -qmax 51 -qdiff 4 -i_qfactor 0.71428572 -maxrate 768k -bufsize 2M -cmp 1 ";
-		
-		*/
 		
 		encodeCommad = "ffmpeg -y -i "+ sourceVideo +size
 			+ otherParameters+" " +targetVideo; 

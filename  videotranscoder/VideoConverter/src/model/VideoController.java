@@ -36,7 +36,6 @@ public class VideoController {
 	public String getFirstInitialVideoName(){
 		for(Video v:videos){
 			if(v.getState() == Video.INITIAL ){
-				v.setState(Video.PROCESSING);	
 				return v.getOrginalFile();
 			}
 		}
@@ -48,6 +47,15 @@ public class VideoController {
 		videos.add(video);
 	}
 	
+	
+	public synchronized void VideoStartedTranscoding(String videoName){
+		  for (Video video: videos) {
+				if(video.getOrginalFile().equals(videoName)){
+					video.setState(Video.PROCESSING);
+				}
+			}
+    } 
+	
 	public synchronized void VideoTrancoded(String videoName){
 		  for (Video video: videos) {
 				if(video.getOrginalFile().equals(videoName)){
@@ -55,5 +63,13 @@ public class VideoController {
 				}
 			}
      } 
+	
+	public synchronized void VideoTrancodeFailed(String videoName){
+		  for (Video video: videos) {
+				if(video.getOrginalFile().equals(videoName)){
+					video.setState(Video.INITIAL);
+				}
+			}
+    } 
 	
 }
