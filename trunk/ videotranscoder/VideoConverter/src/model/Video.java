@@ -24,8 +24,7 @@ public class Video {
 
 	/** The Constant VIDEO_COUNTER. */
 	public static final String VIDEO_COUNTER = "videoCounter";
-	public static final String RELATIVE_PATH = "media/";
-	
+	public static final String ABSOLUTE_PATH = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/media/";
 	
 	public static final int INITIAL = 0 ;
 	public static final int  PROCESSING = 1; 
@@ -179,7 +178,7 @@ public class Video {
 		File f;
 		
 		try {
-			f= new File(RELATIVE_PATH+getOrginalFile());
+			f= new File(ABSOLUTE_PATH+getOrginalFile());
 			f.createNewFile();
 			
 
@@ -195,7 +194,7 @@ public class Video {
 			out.close();
 			inputStream.close();
 			
-			String sourceVideo = RELATIVE_PATH+getOrginalFile();
+			String sourceVideo = ABSOLUTE_PATH+getOrginalFile();
 			
 			String mobileTarget = sourceVideo.substring(0,sourceVideo.lastIndexOf("."))+"-mobile.mp4";
 			String streamingTarget = sourceVideo.substring(0,sourceVideo.lastIndexOf("."))+"-streaming.mp4";
@@ -203,8 +202,8 @@ public class Video {
 			setMobileVideo(e.convertMobileVideo(sourceVideo, mobileTarget));
 			setStreamingVideo(e.convertStreamingVideo(sourceVideo, streamingTarget));
 			
-			File mobileVideoFile = new File(RELATIVE_PATH+getMobileVideo()); 
-			File StreamingVideoFile = new File(RELATIVE_PATH+getStreamingVideo());
+			File mobileVideoFile = new File(ABSOLUTE_PATH+getMobileVideo()); 
+			File StreamingVideoFile = new File(ABSOLUTE_PATH+getStreamingVideo());
 			
 			S3Connector.getS3Connector().uploadFile(VIDEOS_BUCKET,getMobileVideo(), 
 					mobileVideoFile);

@@ -20,19 +20,17 @@ public class TranscoderClient  {
 		this.videoController = videoController;
 	}
 	
-	
 	public String getHostName(){
 		return this.hostName;
 	}
 	
-	
 	public void executeService(){
 			
 	try {   
-		
+		videoController.VideoStartedTranscoding(videoName);
 		
 		try {
-			Thread.sleep(25000);
+			Thread.sleep(20000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,7 +39,7 @@ public class TranscoderClient  {
             TranscoderStub stub = new TranscoderStub( "http://"+hostName+
             		":8080/TranscoderWebService/services/Transcoder.TranscoderHttpSoap12Endpoint/");
             
-            
+           
             /*
             ConfigurationContext conf =  ConfigurationContextFactory.createDefaultConfigurationContext();
             
@@ -50,14 +48,9 @@ public class TranscoderClient  {
             Options options = new Options();
             options.setTimeOutInMilliSeconds(100000);
             
-             
-            new TranscoderStub(conf, "http://"+hostName+
-            		":8080/TranscoderWebService/services/Transcoder.TranscoderHttpSoap12Endpoint/");
-            
-            */
             
             //TranscodeVideo tv = new TranscodeVideo();
-           
+           */
             
             
             TranscoderStub.TranscodeVideo tv = new TranscoderStub.TranscodeVideo(); 

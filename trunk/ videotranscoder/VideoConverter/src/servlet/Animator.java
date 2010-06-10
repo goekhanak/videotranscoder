@@ -121,7 +121,7 @@ public class Animator extends HttpServlet {
 		
 		CLEngine.shellRunner("pwd");
 		// creating a new file with the same name and writing the content in new file
-		File savedFile = new File("media/"+saveFile);
+		File savedFile = new File(Video.ABSOLUTE_PATH+saveFile);
 		savedFile.createNewFile();
 		
 		

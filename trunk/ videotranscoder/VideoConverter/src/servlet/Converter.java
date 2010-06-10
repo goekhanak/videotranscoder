@@ -102,27 +102,23 @@ public class Converter extends HttpServlet {
 	TranscoderClient transcoderClient = null;
 	
 	
-	while(videoController.existsInitialVideo()){
+	while(!videoController.isAllVideosTranscoded()){
 		
-		Instance instance = ec2Connector.getAvailableInstance();
+		if(videoController.getFirstInitialVideoName() !=  null){
 		
-		System.out.println("videoController.existsInitialVideo() is more");
-		
-		if(instance != null){
-			out.println("<p> Available Instance: " + instance.getPublicDnsName() +" </p> \n");
-			System.out.println("AvailabelDNS "+instance.getPublicDnsName());
+			Instance instance = ec2Connector.getAvailableInstance();
 			
-			//transcoderClient = new TranscoderClient("ec2-79-125-28-154.eu-west-1.compute.amazonaws.com", videos.get(0).getOrginalFile(),videos);
-			//transcoderClient = new TranscoderClient("localhost", videos.get(0).getOrginalFile(),videos);
+			System.out.println("videoController.existsInitialVideo() is more");
 			
-			
-			transcoderClient = new TranscoderClient(instance.getPublicDnsName(), videoController.getFirstInitialVideoName(),videoController);
-			
-			
-			
-			transcoderClient.executeService();
+			if(instance != null){
+				out.println("<p> Available Instance: " + instance.getPublicDnsName() +" </p> \n");
+				System.out.println("AvailabelDNS "+instance.getPublicDnsName());
+				
+				transcoderClient = new TranscoderClient("localhost", videoController.getFirstInitialVideoName(),videoController);
+				
+				transcoderClient.executeService();
 		}
-		
+		}
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
