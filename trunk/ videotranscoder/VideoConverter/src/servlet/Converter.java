@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.MonitoringThread;
+import model.TranscoderCOntrollerThread;
 import model.Video;
 import model.VideoController;
 import ws.TranscoderClient;
@@ -65,102 +68,15 @@ public class Converter extends HttpServlet {
 		return;
 	}
 		
-	
-	Integer  vc = (Integer)session.getAttribute(Video.VIDEO_COUNTER) ; 
-		
-		
-	PrintWriter out = response.getWriter();
-	out.println(BasicServlet.DOC_TYPE +
-                "<HTML>\n" +
-                "<HEAD><TITLE>Hello WWW</TITLE></HEAD>\n" +
-                "<BODY>\n" +
-                "<H1> Network HW 5</H1>\n" +
-                "<p><a href=\"http://localhost:8080/Network5/RegisterSaleHtml.html\" >Link</a></p> \n"
-	);	
-		
-	AutoScaler.setNumberOfInstances(vc);
-	
-	VideoController videoController =  new VideoController();
-	Video v;
-	
-	EC2Connector ec2Connector = EC2Connector.getEC2Connector();
+	TranscoderCOntrollerThread transcoderCOntrollerThread = new TranscoderCOntrollerThread(session);
+	transcoderCOntrollerThread.start();
 	
 	
-	for (int i = 1 ;i <= vc; i++ ) {
-		
-		v = (Video)session.getAttribute("v"+i);
-		if (v != null){
-			videoController.addVideo(v);
-			out.println("<p> Orginal FIle: " +v.getOrginalFile() +" </p> \n");
-			out.println("<p> Gif FIle: " +v.getGifFile() +" </p> \n");
-			out.println("<p> MobileVideo FIle: " +v.getMobileVideo() +" </p> \n");
-			out.println("<p> StreaminVideo FIle: " +v.getStreamingVideo() +" </p> \n");
-		}
-		
-	}
+	MonitoringThread monitoringThread = new MonitoringThread(session);
+	monitoringThread.start();
 	
-	TranscoderClient transcoderClient = null;
-	
-	
-	while(!videoController.isAllVideosTranscoded()){
-		
-		if(videoController.getFirstInitialVideoName() !=  null){
-		
-			Instance instance = ec2Connector.getAvailableInstance();
-			
-			System.out.println("videoController.existsInitialVideo() is more");
-			
-			if(instance != null){
-				out.println("<p> Available Instance: " + instance.getPublicDnsName() +" </p> \n");
-				System.out.println("AvailabelDNS "+instance.getPublicDnsName());
-				
-				transcoderClient = new TranscoderClient(instance.getPublicDnsName(), videoController.getFirstInitialVideoName(),videoController);
-				transcoderClient.start();
-		}
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	while(!videoController.isAllVideosTranscoded()){
-		System.out.println("videoController.isAllVideosTranscoded is more");
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	//AutoScaler.setNumberOfInstances(0);
-	
-Vector<Video> videos = new Vector<Video>();	
-	
-for (int i = 1 ;i <= vc; i++ ) {
-		
-		v = (Video)session.getAttribute("v"+i);
-		if (v != null){
-			videos.add(v);
-			String orginalVideo = v.getOrginalFile();
-			v.setMobileVideo(orginalVideo.substring(0,orginalVideo.lastIndexOf("."))+"-mobile.mp4");
-			v.setStreamingVideo(orginalVideo.substring(0,orginalVideo.lastIndexOf("."))+"-streaming.mp4");
-			session.setAttribute("v"+i,v);
-			
-			out.println("<p> Orginal FIle: " +v.getOrginalFile() +" </p> \n");
-			out.println("<p> Gif FIle: " +v.getGifFile() +" </p> \n");
-			out.println("<p> MobileVideo FIle: " +v.getMobileVideo() +" </p> \n");
-			out.println("<p> StreaminVideo FIle: " +v.getStreamingVideo() +" </p> \n");
-		}
-		
-	}
-	
-	out.println("</BODY></HTML>");
+	RequestDispatcher view = request.getRequestDispatcher(BasicServlet.MONITORING_JSP);
+	view.forward(request, response);
 	
 	}	
 		

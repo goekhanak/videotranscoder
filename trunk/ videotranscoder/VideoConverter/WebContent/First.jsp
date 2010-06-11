@@ -49,13 +49,8 @@
 
 </table>
 
-
 <br />
-
-
-
 <br />
-
 
 <%
 
@@ -100,7 +95,7 @@ if(vc != null){
 			%><td>
 			<%
 			
-			%> <img src=<%=  v.getGifFile() %> width="260" height="180"
+			%> <img src=<%=v.getGifFile() %> width="260" height="180"
 				border="0" title=<%= v.getOrginalFile()%>
 				name=<%= v.getOrginalFile()%> alt=<%= v.getOrginalFile()%>>
 
@@ -131,12 +126,9 @@ if(vc != null){
 		
 }
 
-
 %>
 
-
 <br>
-
 
 </body>
 </html>
