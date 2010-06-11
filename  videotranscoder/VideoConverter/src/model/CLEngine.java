@@ -139,6 +139,8 @@ public class CLEngine {
 		
 		int videoDuration = getDurationOfFile(inputFile);
 		
+		System.out.println("This is duration : " +videoDuration);
+		
 	    String genFrameCommand = ""; 
 	    int offset = 0 ;
 	    
@@ -175,10 +177,7 @@ public class CLEngine {
 		
 		durationString  = shellRunnerWithOutput(cmd);
 		
-		System.out.println("This is duration");
-		
 		if(durationString != null){
-			//int seconds  = Integer.parseInt(durationString.substring(durationString.lastIndexOf(':')+1,durationString.lastIndexOf(':')+3));
 			int hours = Integer.parseInt(durationString.substring(0,2));
 			int minutes  = Integer.parseInt(durationString.substring(3,5));
 			int seconds = Integer.parseInt(durationString.substring(6,8));

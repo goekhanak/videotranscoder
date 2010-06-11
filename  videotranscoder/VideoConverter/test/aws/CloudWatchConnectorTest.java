@@ -43,7 +43,7 @@ public class CloudWatchConnectorTest {
 	 */
 	@Test
 	public void testDisplayStatics() {
-		CloudWatchConnector.getCloudWatchConnector().displayMetricStatics();
+		//CloudWatchConnector.getCloudWatchConnector().displayMetricStatics();
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class CloudWatchConnectorTest {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args){
-		CloudWatchConnector.getCloudWatchConnector().displayMetricStatics();
+	//	CloudWatchConnector.getCloudWatchConnector().displayMetricStatics();
 	}
 
 }

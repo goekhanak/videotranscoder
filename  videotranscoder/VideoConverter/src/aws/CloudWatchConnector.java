@@ -7,6 +7,8 @@ package aws;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +35,6 @@ public class CloudWatchConnector {
 	
 	/** The cloud watch. */
 	private AmazonCloudWatch cloudWatch = null;
-	
-	
 	
 	/**
 	 * Instantiates a new cloud watch connector.
@@ -77,10 +77,12 @@ public class CloudWatchConnector {
 	/**
 	 * Display metric statics.
 	 */
-	public void displayMetricStatics(){
+	public String getMetricStatics(Date StartTime, Date endTime){
+		
+		String staticResulstStr = ""; 
+		
 		GetMetricStatisticsRequest request = new GetMetricStatisticsRequest();
-        request.setPeriod(120);
-        //request.setUnit("Bytes");
+        request.setPeriod(60);
         request.setMeasureName("CPUUtilization");
         request.setNamespace("AWS/EC2");
         List<Dimension> dimensions = new ArrayList<Dimension>();
@@ -101,57 +103,26 @@ public class CloudWatchConnector {
         statistics.add("Average");
         statistics.add("Maximum");
         request.setStatistics(statistics);
-        request.setStartTime(new Date(System.currentTimeMillis() - 60 * 1000 * 22) );
-        request.setEndTime(new Date(System.currentTimeMillis() - 60 * 1000 * 10)); 
+        request.setStartTime(StartTime );
+        request.setEndTime(endTime); 
 		 
 		 
 		GetMetricStatisticsResult getMetricStatisticsResult = cloudWatch.getMetricStatistics(request);
 		
-		
-		System.out.println ("GetMetricStatistics Action Response");
-        System.out.println ("=============================================================================");
-        System.out.println ();
-        
-        System.out.println("        GetMetricStatisticsResult");
-        System.out.println();
     
         java.util.List<Datapoint> datapointsList = getMetricStatisticsResult.getDatapoints();
+        
         for (Datapoint datapoints : datapointsList) {
-        	System.out.println("            Datapoints");
         	
-        	 
-        	System.out.println("                Timestamp");
-            System.out.println();
-            System.out.println("                    " + datapoints.getTimestamp());
-            System.out.println();
+        	staticResulstStr = staticResulstStr + " Time:" + datapoints.getTimestamp(); 
+            staticResulstStr = staticResulstStr + " Instances:" + datapoints.getSamples();   
+            staticResulstStr = staticResulstStr + " AVG-CPU:" +  datapoints.getAverage();
+            staticResulstStr = staticResulstStr + " MAX-CPU:" +  datapoints.getMaximum();
+            staticResulstStr = staticResulstStr + "\n";
             
-            System.out.println("                Samples");
-            System.out.println();
-            System.out.println("                    " + datapoints.getSamples());
-            System.out.println();
-            
-            System.out.println("                Average");
-            System.out.println();
-            System.out.println("                    " + datapoints.getAverage());
-            System.out.println();
-        
-        
-            System.out.println("                Sum");
-            System.out.println();
-            System.out.println("                    " + datapoints.getSum());
-            System.out.println();
-        
-        
-            System.out.println("                Minimum");
-            System.out.println();
-            System.out.println("                    " + datapoints.getMinimum());
-            System.out.println();
-        
-            System.out.println("                Maximum");
-            System.out.println();
-            System.out.println("                    " + datapoints.getMaximum());
-            System.out.println();
         }
+        
+        return staticResulstStr;
 	}
 	
 	/**

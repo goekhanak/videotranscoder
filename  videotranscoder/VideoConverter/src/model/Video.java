@@ -19,6 +19,8 @@ import aws.S3Connector;
  */
 public class Video {
 	
+	public static final String IS_READY_SESSION_KEY = "is_ready_session_key";
+	
 	/** The Constant VIDEOS_BUCKET. */
 	public static final String VIDEOS_BUCKET = "videos-s3-bucket";
 

@@ -3,7 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="servlet.Animator"%>
-<%@page import="model.Video"%><html>
+<%@page import="model.Video"%>
+<%@page import="servlet.Monitoring"%><html>
 <%@page import="java.util.Hashtable"%>
 <%@page import="javazoom.upload.MultipartFormDataRequest"%>
 
@@ -17,7 +18,6 @@
 
 <h1>Video Transcoder Informatik5</h1>
 <h2>Transcoded videos</h2>
-
 
 
 <br />
@@ -42,10 +42,6 @@
 </table>
 
 
-
-
-
-<br />
 
 
 
@@ -77,10 +73,14 @@ if(vc != null){
 	
 	%>
 <br />
+
 <%
 	
-	
-	%><table>
+%>
+
+
+
+<table>
 	<%
 	%><tr>
 		<%
@@ -133,6 +133,9 @@ if(vc != null){
 	<%
 	%>
 </table>
+
+
+
 <%
 	
 	

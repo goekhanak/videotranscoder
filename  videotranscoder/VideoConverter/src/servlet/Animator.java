@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.management.monitor.Monitor;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CLEngine;
+import model.TranscoderCOntrollerThread;
 import model.Video;
 import aws.AutoScaler;
 import aws.S3Connector;
@@ -55,6 +57,9 @@ public class Animator extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
+		
+		
+		
 		out.println(BasicServlet.DOC_TYPE +
                 "<HTML>\n" +
                 "<HEAD><TITLE>Hello WWW</TITLE></HEAD>\n" +
@@ -82,6 +87,8 @@ public class Animator extends HttpServlet {
 	 as well as the passed data from mulitpart/form-data is greater than or
 	 equal to 0
 	*/
+
+	
 	if ((contentType != null) && (contentType.indexOf("multipart/form-data") >= 0)) {
 		DataInputStream in = new DataInputStream(request.getInputStream());
 		//we are taking the length of Content type data
