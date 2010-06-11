@@ -1,3 +1,8 @@
+/*
+ * I. Gökhan Aksakallı
+ * Informatik-5 RWTH Aachen
+ * www.dbis.rwth-aachen.de
+ */
 package ws;
 
 import java.rmi.RemoteException;
@@ -6,13 +11,29 @@ import model.VideoController;
 
 import org.apache.axis2.AxisFault;
 
-public class TranscoderClient  {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TranscoderClient.
+ */
+public class TranscoderClient extends Thread {
 
+	/** The host name. */
 	private String hostName = null;
+	
+	/** The video name. */
 	private String videoName = null;
+	
+	/** The video controller. */
 	private VideoController videoController = null;
 	
 	
+	/**
+	 * Instantiates a new transcoder client.
+	 *
+	 * @param hostName the host name
+	 * @param videoName the video name
+	 * @param videoController the video controller
+	 */
 	public TranscoderClient(String hostName, String videoName, VideoController videoController){
 		super();
 		this.hostName =  hostName;
@@ -20,11 +41,19 @@ public class TranscoderClient  {
 		this.videoController = videoController;
 	}
 	
+	/**
+	 * Gets the host name.
+	 *
+	 * @return the host name
+	 */
 	public String getHostName(){
 		return this.hostName;
 	}
 	
-	public void executeService(){
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
+	public void run(){
 			
 	try {   
 		videoController.VideoStartedTranscoding(videoName);
@@ -38,19 +67,6 @@ public class TranscoderClient  {
 		
             TranscoderStub stub = new TranscoderStub( "http://"+hostName+
             		":8080/TranscoderWebService/services/Transcoder.TranscoderHttpSoap12Endpoint/");
-            
-           
-            /*
-            ConfigurationContext conf =  ConfigurationContextFactory.createDefaultConfigurationContext();
-            
-            
-            
-            Options options = new Options();
-            options.setTimeOutInMilliSeconds(100000);
-            
-            
-            //TranscodeVideo tv = new TranscodeVideo();
-           */
             
             
             TranscoderStub.TranscodeVideo tv = new TranscoderStub.TranscodeVideo(); 

@@ -15,10 +15,10 @@
 </head>
 <body>
 
-<h1>Video Encoder Informatik5</h1>
+<h1>Video Transcoder Informatik5</h1>
+<h3>Auto scales to the number transcoding jobs</h3>
 
-<%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/mm/yyyy"); %>
-<h2>Current Date: <%= df.format(new java.util.Date()) %></h2>
+<br />
 
 
 
@@ -50,20 +50,8 @@
 </table>
 
 
-
-
-
 <br />
 
-
-<!-- 
-
-<img src="himym.gif" width="260" height="180" border="0" title="try title"  name="tryname" alt="1 ">
-<img src="himym.s05e02.gif" width="260" height="180" border="0" title="try title"  name="smname" alt="2 ">
-<img src="himym0.jpg" width="260" height="180" border="0" title="try title"  name="tryname2" alt="3 ">
-<img src="himym3.jpg" width="260" height="180" border="0" title="try title"  name="tryname21" alt="stg">
-
- -->
 
 
 <br />
@@ -80,8 +68,11 @@ Integer vc = (Integer) session.getAttribute("videoCounter");
 
 if(vc != null){
 	
-	%>vc is:
+	%>
+<!--	
+	vc is:
 <%= vc%>
+-->
 <%
 	
 	Video v = null;
@@ -89,10 +80,7 @@ if(vc != null){
 	
 	%>
 <br />
-<%
-	
-	
-	
+<%	
 	%><table>
 	<%
 	%><tr>
@@ -132,9 +120,7 @@ if(vc != null){
 			}
 		
 		}
-		
-		
-			 
+					 
 	}
 	%>
 	</tr>
@@ -147,29 +133,6 @@ if(vc != null){
 
 
 %>
-
-
-
-
-
-<!--  
-
-<img src="/home/goekhan/Videos/himym.gif" width="320" height="240" border="0" alt="himym.gif">
-
--->
-
-
-
-<a href="/home/goekhan/Videos/himym3.jpg"><img
-	src="/home/goekhan/Videos/himym3_thumbnail.png" width="160"
-	height="120" border="0" alt=""></a>
-
-<script type="text/javascript">
-var path = document.getElementById('pathID').value;
-document.write(document.location.pathname).getElementById('pathID');
-</script>
-
-
 
 
 <br>

@@ -1,3 +1,8 @@
+/*
+ * I. Gökhan Aksakallı
+ * Informatik-5 RWTH Aachen
+ * www.dbis.rwth-aachen.de
+ */
 package aws;
 
 
@@ -20,21 +25,39 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Monitoring;
 import com.amazonaws.services.ec2.model.Reservation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EC2Connector.
+ */
 public class EC2Connector {
 	
 	//private static SQSConnector sQSConnector =  null;
 	
+	/** The ec2. */
 	private AmazonEC2 ec2 =  null;
+	
+	/** The ec2 connector. */
 	private static EC2Connector ec2Connector = null;
+	
+	/** The busy instances ids. */
 	private TreeSet<String> busyInstancesIds = null;
 	
+	/** The Constant SERVER_ID. */
 	private static final String SERVER_ID = "i-fc4fda8b";
 	
+	/**
+	 * Instantiates a new e c2 connector.
+	 */
 	private EC2Connector(){
 		super();
 	}
 	
 	
+	/**
+	 * Gets the e c2 connector.
+	 *
+	 * @return the e c2 connector
+	 */
 	public static EC2Connector getEC2Connector(){
 		if(ec2Connector == null){
 			ec2Connector =  new EC2Connector();
@@ -61,11 +84,20 @@ public class EC2Connector {
 		return ec2Connector;
 	}
 	
+	/**
+	 * Gets the cloud watch information.
+	 *
+	 * @param instance the instance
+	 * @return the cloud watch information
+	 */
 	public String getCloudWatchInformation(Instance instance){
 		return null;
 	}
 	
 
+	/**
+	 * Display instances.
+	 */
 	public void displayInstances(){
 		 
 		/*
@@ -114,6 +146,11 @@ public class EC2Connector {
         }
 	}
 
+	/**
+	 * Gets the available instance.
+	 *
+	 * @return the available instance
+	 */
 	public Instance getAvailableInstance() {
 		DescribeInstancesResult describeInstancesRequest = ec2.describeInstances();
         List<Reservation> reservations = describeInstancesRequest.getReservations();
@@ -138,6 +175,9 @@ public class EC2Connector {
 		return null;
 	}
 	
+	/**
+	 * Reset busy instances.
+	 */
 	public void resetBusyInstances(){
 		busyInstancesIds.removeAll(busyInstancesIds);
 	}

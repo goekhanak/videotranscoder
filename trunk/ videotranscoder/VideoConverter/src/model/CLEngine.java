@@ -33,6 +33,12 @@ public class CLEngine {
 	public static final String AWS_DIRECTORY = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/webapps/VideoConverter/";
 	
 	
+	/**
+	 * Shell runner with output.
+	 *
+	 * @param command the command
+	 * @return the string
+	 */
 	public static String shellRunnerWithOutput(String command){
 		String s = "";
 		String output  = null;
@@ -153,6 +159,12 @@ public class CLEngine {
 	}
 	
 	
+	/**
+	 * Gets the duration of file.
+	 *
+	 * @param inputFile the input file
+	 * @return the duration of file
+	 */
 	private int getDurationOfFile(String inputFile) {
 		
 		String durationString = null;

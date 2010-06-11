@@ -114,9 +114,8 @@ public class Converter extends HttpServlet {
 				out.println("<p> Available Instance: " + instance.getPublicDnsName() +" </p> \n");
 				System.out.println("AvailabelDNS "+instance.getPublicDnsName());
 				
-				transcoderClient = new TranscoderClient("localhost", videoController.getFirstInitialVideoName(),videoController);
-				
-				transcoderClient.executeService();
+				transcoderClient = new TranscoderClient(instance.getPublicDnsName(), videoController.getFirstInitialVideoName(),videoController);
+				transcoderClient.start();
 		}
 		}
 		try {
