@@ -24,10 +24,17 @@ public class Video {
 
 	/** The Constant VIDEO_COUNTER. */
 	public static final String VIDEO_COUNTER = "videoCounter";
+	
+	/** The Constant ABSOLUTE_PATH. */
 	public static final String ABSOLUTE_PATH = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/media/";
 	
+	/** The Constant INITIAL. */
 	public static final int INITIAL = 0 ;
+	
+	/** The Constant PROCESSING. */
 	public static final int  PROCESSING = 1; 
+	
+	/** The Constant TRANSCODED. */
 	public static final int  TRANSCODED = 2;
 	
 	/** The orginal file. */
@@ -42,8 +49,15 @@ public class Video {
 	/** The streaming video. */
 	private String streamingVideo = null;	
 
+	/** The state. */
 	private int state =  INITIAL;
 	
+	/**
+	 * Gets the s3 url.
+	 *
+	 * @param fileName the file name
+	 * @return the s3 url
+	 */
 	public static String getS3Url(String fileName){
 		return "http://"+VIDEOS_BUCKET+".s3.amazonaws.com/" + fileName;
 	}
@@ -59,10 +73,20 @@ public class Video {
 	}
 
 
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
 	public int getState() {
 		return state;
 	}
 
+	/**
+	 * Sets the state.
+	 *
+	 * @param state the new state
+	 */
 	public void setState(int state) {
 		this.state = state;
 	}
@@ -97,6 +121,12 @@ public class Video {
 	}
 
 	
+	/**
+	 * Gets the file name.
+	 *
+	 * @param fileWithPath the file with path
+	 * @return the file name
+	 */
 	public String getFileName(String fileWithPath){
 		if(fileWithPath.lastIndexOf('/') > -1 ){
 			fileWithPath = fileWithPath.substring(fileWithPath.lastIndexOf("/")+1);

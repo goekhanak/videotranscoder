@@ -1,3 +1,8 @@
+/*
+ * I. Gökhan Aksakallı
+ * Informatik-5 RWTH Aachen
+ * www.dbis.rwth-aachen.de
+ */
 package aws;
 /*
  * Copyright 2010 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -29,6 +34,7 @@ import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
+// TODO: Auto-generated Javadoc
 /**
  * This sample demonstrates how to make basic requests to Amazon SQS using the
  * AWS SDK for Java.
@@ -44,16 +50,31 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
  */
 public class SQSConnector {
 	
+	/** The Constant TRANSCODER_QUEUE_NAME. */
 	public static final String TRANSCODER_QUEUE_NAME = "Transcoder-queue";
+	
+	/** The Constant TRANSCODER_QUEUE_URL. */
 	public static final String TRANSCODER_QUEUE_URL = "https://queue.amazonaws.com/786131973585/Transcoder-queue";
+	
+	/** The s qs connector. */
 	private static SQSConnector sQSConnector =  null;
+	
+	/** The sqs. */
 	private AmazonSQS sqs =  null;;
 	
 	
+	/**
+	 * Instantiates a new sQS connector.
+	 */
 	private SQSConnector(){
 		super();
 	}
 	
+	/**
+	 * Gets the sQS connector.
+	 *
+	 * @return the sQS connector
+	 */
 	public static SQSConnector getSQSConnector(){
 		if (sQSConnector == null){
 			sQSConnector = new SQSConnector();
@@ -73,6 +94,9 @@ public class SQSConnector {
 	} 
 	
 	
+	/**
+	 * Creates the queue.
+	 */
 	public void createQueue(){
 		
 		System.out.println("Creating a new SQS queue called " +TRANSCODER_QUEUE_NAME);
@@ -90,6 +114,12 @@ public class SQSConnector {
         System.out.println();
 	}
 
+	/**
+	 * Send message.
+	 *
+	 * @param queueUrl the queue url
+	 * @param messageContent the message content
+	 */
 	public void sendMessage(String queueUrl,String messageContent){
 		// Send a message
 	    System.out.println("Sending a message to " + queueUrl);
@@ -97,6 +127,11 @@ public class SQSConnector {
 	    sqs.sendMessage(sendMessageRequest);
 	}
 	
+	/**
+	 * Display messages.
+	 *
+	 * @param queueUrl the queue url
+	 */
 	public void displayMessages(String queueUrl){
 		System.out.println("Receiving messages from MyQueue.\n");
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl);
@@ -115,6 +150,11 @@ public class SQSConnector {
         }
 	}
 	
+	/**
+	 * Delete message.
+	 *
+	 * @param queueUrl the queue url
+	 */
 	public void deleteMessage(String queueUrl){
 		System.out.println("Deleting a message.\n");
 		
@@ -129,6 +169,12 @@ public class SQSConnector {
         
 	}
 	
+	/**
+	 * Gets the message count.
+	 *
+	 * @param queueUrl the queue url
+	 * @return the message count
+	 */
 	public int getMessageCount(String queueUrl){
 		 // Receive messages
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl);
@@ -136,6 +182,12 @@ public class SQSConnector {
         return messages.size();
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
         /*
          * Important: Be sure to fill in your AWS access credentials in the

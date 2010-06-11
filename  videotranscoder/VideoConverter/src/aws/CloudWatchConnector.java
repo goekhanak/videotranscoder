@@ -1,7 +1,11 @@
+/*
+ * I. Gökhan Aksakallı
+ * Informatik-5 RWTH Aachen
+ * www.dbis.rwth-aachen.de
+ */
 package aws;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,18 +22,32 @@ import com.amazonaws.services.cloudwatch.model.ListMetricsRequest;
 import com.amazonaws.services.cloudwatch.model.ListMetricsResult;
 import com.amazonaws.services.cloudwatch.model.Metric;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CloudWatchConnector.
+ */
 public class CloudWatchConnector {
 
+	/** The cloud watch connector. */
 	private static CloudWatchConnector cloudWatchConnector = null;
 	
+	/** The cloud watch. */
 	private AmazonCloudWatch cloudWatch = null;
 	
 	
 	
+	/**
+	 * Instantiates a new cloud watch connector.
+	 */
 	private CloudWatchConnector(){
 		super();
 	}
 	
+	/**
+	 * Gets the cloud watch connector.
+	 *
+	 * @return the cloud watch connector
+	 */
 	public static CloudWatchConnector getCloudWatchConnector(){
 		if(cloudWatchConnector == null){
 			cloudWatchConnector =  new CloudWatchConnector();
@@ -46,7 +64,7 @@ public class CloudWatchConnector {
 			}
 
 			cloudWatchConnector.cloudWatch = new AmazonCloudWatchClient(credentials);
-			//cloudWatchConnector.cloudWatch.setEndpoint("ec2.eu-west-1.amazonaws.com");
+			cloudWatchConnector.cloudWatch.setEndpoint("monitoring.eu-west-1.amazonaws.com");
 			
 		}
 		
@@ -56,23 +74,26 @@ public class CloudWatchConnector {
 	
 	
 	
+	/**
+	 * Display metric statics.
+	 */
 	public void displayMetricStatics(){
 		GetMetricStatisticsRequest request = new GetMetricStatisticsRequest();
         request.setPeriod(120);
-        request.setUnit("Bytes");
-        request.setMeasureName("NetworkOut");
+        //request.setUnit("Bytes");
+        request.setMeasureName("CPUUtilization");
         request.setNamespace("AWS/EC2");
         List<Dimension> dimensions = new ArrayList<Dimension>();
         Dimension d1  = new Dimension();
         d1.setName("InstanceType");
-        d1.setValue("m1.small");
+        d1.setValue("c1.medium");
         
         Dimension d2  = new Dimension();
         d2.setName("ImageID");
         d2.setValue("ami-8f0923fb");
         
         dimensions.add(d1);
-        dimensions.add(d2);
+       // dimensions.add(d2);
         request.setDimensions(dimensions);
         
         List<String> statistics = new ArrayList<String>();
@@ -80,8 +101,8 @@ public class CloudWatchConnector {
         statistics.add("Average");
         statistics.add("Maximum");
         request.setStatistics(statistics);
-        request.setStartTime(new Date());
-        request.setEndTime(new Date(System.currentTimeMillis() + 60 * 1000 * 1)); 
+        request.setStartTime(new Date(System.currentTimeMillis() - 60 * 1000 * 22) );
+        request.setEndTime(new Date(System.currentTimeMillis() - 60 * 1000 * 10)); 
 		 
 		 
 		GetMetricStatisticsResult getMetricStatisticsResult = cloudWatch.getMetricStatistics(request);
@@ -103,9 +124,39 @@ public class CloudWatchConnector {
             System.out.println();
             System.out.println("                    " + datapoints.getTimestamp());
             System.out.println();
+            
+            System.out.println("                Samples");
+            System.out.println();
+            System.out.println("                    " + datapoints.getSamples());
+            System.out.println();
+            
+            System.out.println("                Average");
+            System.out.println();
+            System.out.println("                    " + datapoints.getAverage());
+            System.out.println();
+        
+        
+            System.out.println("                Sum");
+            System.out.println();
+            System.out.println("                    " + datapoints.getSum());
+            System.out.println();
+        
+        
+            System.out.println("                Minimum");
+            System.out.println();
+            System.out.println("                    " + datapoints.getMinimum());
+            System.out.println();
+        
+            System.out.println("                Maximum");
+            System.out.println();
+            System.out.println("                    " + datapoints.getMaximum());
+            System.out.println();
         }
 	}
 	
+	/**
+	 * Display metrics.
+	 */
 	public void displayMetrics(){
 		ListMetricsRequest request = new ListMetricsRequest();
 		ListMetricsResult listMetricsResult = cloudWatch.listMetrics(request);

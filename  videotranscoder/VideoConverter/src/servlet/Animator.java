@@ -183,6 +183,10 @@ public class Animator extends HttpServlet {
 						
 		out.println("</BODY></HTML>");
 		
+		
+		RequestDispatcher view = request.getRequestDispatcher("/First.jsp");
+		view.forward(request, response);
+		
 	}
 		
 	}	
