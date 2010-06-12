@@ -7,8 +7,6 @@ package aws;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +74,10 @@ public class CloudWatchConnector {
 	
 	/**
 	 * Display metric statics.
+	 *
+	 * @param StartTime the start time
+	 * @param endTime the end time
+	 * @return the metric statics
 	 */
 	public String getMetricStatics(Date StartTime, Date endTime){
 		

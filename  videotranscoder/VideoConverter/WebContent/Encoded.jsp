@@ -4,7 +4,6 @@
 
 <%@page import="servlet.Animator"%>
 <%@page import="model.Video"%>
-<%@page import="servlet.Monitoring"%><html>
 <%@page import="java.util.Hashtable"%>
 <%@page import="javazoom.upload.MultipartFormDataRequest"%>
 

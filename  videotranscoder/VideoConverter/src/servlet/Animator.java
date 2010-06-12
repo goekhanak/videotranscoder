@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.management.monitor.Monitor;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.CLEngine;
-import model.TranscoderCOntrollerThread;
 import model.Video;
 import aws.AutoScaler;
 import aws.S3Connector;
@@ -123,10 +120,8 @@ public class Animator extends HttpServlet {
 		pos = file.indexOf("\n", pos) + 1;
 		pos = file.indexOf("\n", pos) + 1;
 		int startPos = ((file.substring(0, pos)).getBytes()).length;
-
+	
 		
-		
-		CLEngine.shellRunner("pwd");
 		// creating a new file with the same name and writing the content in new file
 		File savedFile = new File(Video.ABSOLUTE_PATH+saveFile);
 		savedFile.createNewFile();

@@ -33,6 +33,9 @@ public class CLEngine {
 	public static final String AWS_DIRECTORY = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/webapps/VideoConverter/";
 	
 	
+	/** The Constant SCRIPTS_DIR. */
+	public static final String SCRIPTS_DIR = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/scripts/";
+	
 	/**
 	 * Shell runner with output.
 	 *
@@ -155,9 +158,30 @@ public class CLEngine {
 			+inputFile.substring(0,inputFile.lastIndexOf("."))+i+".jpg";
 			shellRunner(genFrameCommand);
 		}
-			
+	}
+	
+	/**
+	 * Genrate gif file.
+	 *
+	 * @param inputFile the input file
+	 */
+	public void genrateGifFile(String inputFile){
+		inputFile = Video.ABSOLUTE_PATH+inputFile;
+		String outputFile = inputFile.substring(0,inputFile.lastIndexOf("."))+".gif"; 
 		
 		
+		CLEngine.shellRunner("/bin/sh "+SCRIPTS_DIR+"generateGif.sh "+inputFile);
+		
+		
+		String copyDestionation = outputFile;
+		if(copyDestionation.indexOf("/") >= 0){
+			copyDestionation = copyDestionation.substring(copyDestionation.lastIndexOf("/")+1);
+		}
+		
+		shellRunner("cp -f "+outputFile +" "
+				+LOCAL_DIRECTORY+copyDestionation);
+		shellRunner("cp -f "+outputFile +" "
+				+AWS_DIRECTORY+copyDestionation);
 	}
 	
 	
@@ -174,10 +198,10 @@ public class CLEngine {
 		//String cmd = "ffmpeg -i "+inputFile+"  2>&1 | grep \"Duration\" | cut -d ' ' -f 4 | sed s/,//";
 		String cmd = "/bin/sh /home/ubuntu/tomcat/apache-tomcat-6.0.26/scripts/getDuration.sh "+inputFile;
 		
-		
 		durationString  = shellRunnerWithOutput(cmd);
 		
-		if(durationString != null){
+		
+		if(durationString != null && durationString.indexOf(":") > -1 ){
 			int hours = Integer.parseInt(durationString.substring(0,2));
 			int minutes  = Integer.parseInt(durationString.substring(3,5));
 			int seconds = Integer.parseInt(durationString.substring(6,8));
@@ -186,7 +210,7 @@ public class CLEngine {
 		}
 		
 		
-		return 100;
+		return 80;
 	}
 
 
@@ -201,8 +225,6 @@ public class CLEngine {
 		
 		String animatedCommand = "convert -delay " +CLEngine.DELAY_TICK +" ";
 		String outputFile = inputFile.substring(0,inputFile.lastIndexOf("."))+".gif"; 
-		
-		
 		
 		for (int i = 0; i < CLEngine.NUMBER_OF_KEY_FRAMES; i++) {
 			animatedCommand = animatedCommand + " " + 
@@ -271,7 +293,6 @@ public String convertStreamingVideo(String sourceVideo, String targetVideo){
 		String size = " -s 320x240 ";
 		String otherParameters="";
 		String encodeCommad = "";
-		
 		
 		
 		//one pass 
