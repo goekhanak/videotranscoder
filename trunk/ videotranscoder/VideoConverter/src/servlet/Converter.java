@@ -6,9 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,12 +17,6 @@ import javax.servlet.http.HttpSession;
 import model.MonitoringThread;
 import model.TranscoderCOntrollerThread;
 import model.Video;
-import model.VideoController;
-import ws.TranscoderClient;
-import aws.AutoScaler;
-import aws.EC2Connector;
-
-import com.amazonaws.services.ec2.model.Instance;
 
 // TODO: Auto-generated Javadoc
 /**

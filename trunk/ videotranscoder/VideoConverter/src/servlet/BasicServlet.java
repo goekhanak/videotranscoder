@@ -16,8 +16,14 @@ public abstract class BasicServlet  {
 	
 	/** The Constant FIRST_JSP. */
 	public static final String FIRST_JSP = "/First.jsp";
+	
+	/** The Constant ENCODED_JSP. */
 	public static final String ENCODED_JSP = "/Encoded.jsp";
+	
+	/** The Constant MONITORING_SERVLET. */
 	public static final String MONITORING_SERVLET = "/Monitoring";
+	
+	/** The Constant MONITORING_JSP. */
 	public static final String MONITORING_JSP = "/Monitoring.jsp";
 	
 	/** The Constant DOC_TYPE. */

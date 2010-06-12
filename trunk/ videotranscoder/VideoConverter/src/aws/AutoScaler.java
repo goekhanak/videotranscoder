@@ -45,7 +45,7 @@ public class AutoScaler {
 		return CLEngine.shellRunner(cmd);
 		*/
 		
-		return CLEngine.shellRunner("/bin/sh scripts/setCapacity.sh "+Auto_Scaling_Group_Name +
+		return CLEngine.shellRunner("/bin/sh "+CLEngine.SCRIPTS_DIR +"setCapacity.sh "+Auto_Scaling_Group_Name +
 				" "+desiredCapacity);
 	}
 	

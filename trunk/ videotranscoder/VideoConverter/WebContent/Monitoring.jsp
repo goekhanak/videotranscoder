@@ -87,7 +87,6 @@ if(session.getAttribute(Video.IS_READY_SESSION_KEY) != null ){
 		
 		
 		
-		
 	</tr>
 
 </table>

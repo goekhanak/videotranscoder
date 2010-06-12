@@ -19,6 +19,7 @@ import aws.S3Connector;
  */
 public class Video {
 	
+	/** The Constant IS_READY_SESSION_KEY. */
 	public static final String IS_READY_SESSION_KEY = "is_ready_session_key";
 	
 	/** The Constant VIDEOS_BUCKET. */
@@ -193,8 +194,11 @@ public class Video {
 	public void generateGif() {
 		// TODO Auto-generated method stub
 		CLEngine e = new CLEngine();
+		
 		e.generateKeyFrames(orginalFile);
 		e.createAnimatedGif(orginalFile);
+		
+		//e.genrateGifFile(orginalFile);
 		
 		setGifFile(orginalFile.substring(0,orginalFile.lastIndexOf(".")) +".gif");		
 	}

@@ -1,3 +1,8 @@
+/*
+ * I. Gökhan Aksakallı
+ * Informatik-5 RWTH Aachen
+ * www.dbis.rwth-aachen.de
+ */
 package model;
 
 import java.util.Vector;
@@ -10,19 +15,32 @@ import aws.EC2Connector;
 
 import com.amazonaws.services.ec2.model.Instance;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TranscoderCOntrollerThread.
+ */
 public class TranscoderCOntrollerThread extends Thread{
 
 	
+	/** The session. */
 	private HttpSession session;
 	
-	public static final String ABSOLUTE_PATH = "/home/ubuntu/tomcat/apache-tomcat-6.0.26/monitoring/";
 	
+	
+	/**
+	 * Instantiates a new transcoder c ontroller thread.
+	 *
+	 * @param session the session
+	 */
 	public  TranscoderCOntrollerThread(HttpSession session){
 		super();
 		this.session = session;
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run (){
 		
 		Integer  vc = (Integer)session.getAttribute(Video.VIDEO_COUNTER) ; 
