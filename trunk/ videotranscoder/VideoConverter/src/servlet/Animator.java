@@ -93,7 +93,7 @@ public class Animator extends HttpServlet {
 		
 		
 		if(formDataLength < 400 ){
-			RequestDispatcher view = request.getRequestDispatcher(BasicServlet.FIRST_JSP);
+			RequestDispatcher view = request.getRequestDispatcher(BasicServlet.INDEX_JSP);
 			view.forward(request, response);
 			return;
 		}

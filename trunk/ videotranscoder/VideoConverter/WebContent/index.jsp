@@ -9,23 +9,67 @@
 
 
 
+
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Video Encoder Informatik5</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Cloud Video Transcoder</title>
+	<link type="text/css" rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-<h1>Video Transcoder Informatik5</h1>
+<div id="wrapper">
+	<div id="headercontainer">
+		<div id="header">
+			<h1><center><a href="index.jsp" class="title">Cloud Video Transcoder</a></center></h1>
+		</div>
+		
+		
+		<div id="nav2">
+        	<ul>
+        		<span class="">Show:</span>
+                <li><a href="index.jsp?view=images" class="link">Home</a></li> |
+                <li><a href="index.jsp?view=videos" class="link">Upload</a></li> |
+                <li><a href="index.jsp?view=videos" class="link">Gallery</a></li> |
+                <li><a href="index.jsp?view=videos" class="link">Transcoded</a></li> |
+                <li><a href="index.jsp?view=videos" class="link">Monitor</a></li> |
+        	</ul>
+        </div>		
+		
+	 </div>	
+	 
+<br/>
+<br/>
+<br/>	 
 <h3>Auto scales to the number transcoding jobs</h3>
 
-<br />
+
 
 
 
 <form METHOD=post ACTION="/VideoConverter/Animator.html"
-	ENCTYPE="multipart/form-data">Select a file: <input TYPE="file"
-	NAME="fname" size="50"> <br />
+	ENCTYPE="multipart/form-data" onsubmit="return check();"
+	>Please select a video file: <input TYPE="file"
+	NAME="fname" size="50" accept="image/gif,image/jpeg"  > <br />
 <input type="submit" name="button" value="upload" /></form>
+
+
+
+<script type="text/javascript" language="JavaScript">
+function check() {
+  var ext = document.f.pic.value;
+  ext = ext.substring(ext.length-3,ext.length);
+  ext = ext.toLowerCase();
+  if(ext != 'jpg') {
+    alert('You selected a .'+ext+
+          ' file; please select a .jpg file instead!');
+    return false; }
+  else
+    return true; }
+</script>
+
 
 
 <br />
@@ -128,7 +172,8 @@ if(vc != null){
 
 %>
 
-<br>
+
+</div>
 
 </body>
 </html>

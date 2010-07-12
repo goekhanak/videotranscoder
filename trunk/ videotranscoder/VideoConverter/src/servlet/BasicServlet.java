@@ -15,7 +15,7 @@ public abstract class BasicServlet  {
 
 	
 	/** The Constant FIRST_JSP. */
-	public static final String FIRST_JSP = "/First.jsp";
+	public static final String INDEX_JSP = "/index.jsp";
 	
 	/** The Constant ENCODED_JSP. */
 	public static final String ENCODED_JSP = "/Encoded.jsp";
