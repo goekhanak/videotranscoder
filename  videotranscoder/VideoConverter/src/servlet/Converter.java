@@ -54,7 +54,7 @@ public class Converter extends HttpServlet {
 		
 	if(session == null || session.getAttribute(Video.VIDEO_COUNTER) == null ){
 			
-		RequestDispatcher view = request.getRequestDispatcher(BasicServlet.FIRST_JSP);
+		RequestDispatcher view = request.getRequestDispatcher(BasicServlet.INDEX_JSP);
 		view.forward(request, response);
 		return;
 	}
